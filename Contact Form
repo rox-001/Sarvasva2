@@ -1,0 +1,84 @@
+<!-- ============================================
+     CONTACT FORM SECTION (Google Sheets)
+     ============================================ -->
+<div class="form-section" style="max-width: 600px; margin: 3rem auto; padding: 2rem; background: var(--white); border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+    <h2 style="font-size: 1.5rem; font-weight: 700; color: var(--navy-primary); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
+        <i class="fas fa-envelope" style="color: var(--gold-primary);"></i>
+        Contact Us
+    </h2>
+    
+    <form id="google-form">
+        <!-- Google Apps Script URL - REPLACE THIS -->
+        <input type="hidden" name="scriptURL" value="https://script.google.com/macros/s/AKfycbz4mVHWg3Enfk-LnJZ2ty2mP0Eq1yErdwyjWHApv35-VblfKsnUPRkW7qwCoMC3uoGWiQ/exec">
+        
+        <!-- Name Field -->
+        <div style="margin-bottom: 1rem;">
+            <label for="name" style="display: block; font-weight: 600; color: var(--navy-primary); margin-bottom: 0.5rem;">
+                <i class="fas fa-user" style="margin-right: 8px; color: var(--gold-secondary);"></i>Your Name
+            </label>
+            <input type="text" id="name" name="name" required
+                style="width: 100%; padding: 0.75rem; border: 2px solid var(--gray-light); border-radius: 8px; font-size: 1rem; transition: 0.3s; box-sizing: border-box;"
+                onfocus="this.style.borderColor='var(--navy-primary)'; this.style.boxShadow='0 0 0 3px rgba(0,49,83,0.1)';"
+                onblur="this.style.borderColor='var(--gray-light)'; this.style.boxShadow='none';">
+        </div>
+        
+        <!-- Email Field -->
+        <div style="margin-bottom: 1rem;">
+            <label for="email" style="display: block; font-weight: 600; color: var(--navy-primary); margin-bottom: 0.5rem;">
+                <i class="fas fa-envelope" style="margin-right: 8px; color: var(--gold-secondary);"></i>Your Email
+            </label>
+            <input type="email" id="email" name="email" required
+                style="width: 100%; padding: 0.75rem; border: 2px solid var(--gray-light); border-radius: 8px; font-size: 1rem; transition: 0.3s; box-sizing: border-box;"
+                onfocus="this.style.borderColor='var(--navy-primary)'; this.style.boxShadow='0 0 0 3px rgba(0,49,83,0.1)';"
+                onblur="this.style.borderColor='var(--gray-light)'; this.style.boxShadow='none';">
+        </div>
+        
+        <!-- Topic Dropdown -->
+        <div style="margin-bottom: 1rem;">
+            <label for="topic" style="display: block; font-weight: 600; color: var(--navy-primary); margin-bottom: 0.5rem;">
+                <i class="fas fa-tag" style="margin-right: 8px; color: var(--gold-secondary);"></i>Topic
+            </label>
+            <select id="topic" name="topic"
+                style="width: 100%; padding: 0.75rem; border: 2px solid var(--gray-light); border-radius: 8px; font-size: 1rem; transition: 0.3s; background: white; box-sizing: border-box;"
+                onfocus="this.style.borderColor='var(--navy-primary)';"
+                onblur="this.style.borderColor='var(--gray-light)';">
+                <option value="General Inquiry">General Inquiry</option>
+                <option value="Feedback">Feedback</option>
+                <option value="Suggestion">Suggestion</option>
+                <option value="Complaint">Complaint</option>
+                <option value="Event Request">Event Request</option>
+                <option value="Collaboration">Collaboration</option>
+            </select>
+        </div>
+        
+        <!-- Message Field -->
+        <div style="margin-bottom: 1.5rem;">
+            <label for="message" style="display: block; font-weight: 600; color: var(--navy-primary); margin-bottom: 0.5rem;">
+                <i class="fas fa-comment" style="margin-right: 8px; color: var(--gold-secondary);"></i>Message
+            </label>
+            <textarea id="message" name="message" rows="5" required
+                style="width: 100%; padding: 0.75rem; border: 2px solid var(--gray-light); border-radius: 8px; font-size: 1rem; transition: 0.3s; resize: vertical; box-sizing: border-box; font-family: inherit;"
+                onfocus="this.style.borderColor='var(--navy-primary)'; this.style.boxShadow='0 0 0 3px rgba(0,49,83,0.1)';"
+                onblur="this.style.borderColor='var(--gray-light)'; this.style.boxShadow='none';"></textarea>
+        </div>
+        
+        <!-- Submit Button -->
+        <button type="submit" id="submit-btn"
+            style="width: 100%; padding: 1rem 2rem; background: linear-gradient(135deg, var(--gold-primary), var(--gold-secondary)); color: var(--navy-primary); border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 0.5rem;"
+            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 15px rgba(244,185,66,0.4)';"
+            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+            <i class="fas fa-paper-plane"></i> Send Message
+        </button>
+        
+        <!-- Status Message -->
+        <div id="form-status" style="margin-top: 1rem; text-align: center; display: none;"></div>
+    </form>
+</div>
+
+<script>
+document.getElementById('google-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const btn = document.getElementById('submit-btn');
+    const statusDiv = document.getElementById('form-status');
+    const originalText =
