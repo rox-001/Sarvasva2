@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SARVASVA - College Knowledge Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --navy-primary: #003153;
+            --navy-secondary: #0f3b55;
+            --gold-primary: #ffd966;
+            --gold-secondary: #f4b942;
+            --white: #ffffff;
+            --off-white: #f8f9fa;
+            --gray-light: #e9ecef;
+            --gray: #6c757d;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background-color: var(--off-white);
+            color: var(--navy-primary);
+            line-height: 1.6;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--navy-primary);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--gold-primary), var(--gold-secondary));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--white);
+            box-shadow: 0 2px 5px rgba(244, 185, 66, 0.3);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: var(--transition);
+            font-weight: 500;
+            color: var(--navy-primary);
+        }
+
+        .nav-link:hover {
+            background-color: var(--gray-light);
+        }
+
+        .nav-link.active {
+            background-color: var(--navy-primary);
+            color: var(--white);
+        }
+
+        /* Mobile Navigation */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--navy-primary);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Page Sections */
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Acknowledgement Grid */
+        .acknowledgement-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .dept-pill {
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, var(--navy-primary), var(--navy-secondary));
+            color: var(--white);
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .dept-pill:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 49, 83, 0.3);
+        }
+
+        .dept-pill.principal {
+            background: linear-gradient(135deg, var(--gold-primary), var(--gold-secondary));
+            color: var(--navy-primary);
+            font-weight: 600;
+        }
+
+        .dept-pill.mentors {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+        }
+
+        /* Cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--gold-primary), var(--gold-secondary));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--navy-primary);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--navy-primary);
+        }
+
+        .card-content {
+            color: var(--gray);
+            margin-bottom: 1rem;
+        }
+
+        .card-link {
+            color: var(--navy-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .card-link:hover {
+            color: var(--gold-secondary);
+            transform: translateX(5px);
+        }
+
+        /* Principal's Message */
+        .principal-message {
+            background: linear-gradient(135deg, var(--navy-primary), var(--navy-secondary));
+            color: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            box-shadow: var(--shadow);
+        }
+
+        .principal-message h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* Section Headers */
+        .section-header {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--navy-primary);
+            border-bottom: 3px solid var(--gold-primary);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        /* Department Badge */
+        .dept-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--gold-primary);
+            color: var(--navy-primary);
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+
+        /* Event Block */
+        .event-block {
+            background: var(--white);
+            border-left: 4px solid var(--gold-primary);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .event-block:hover {
+            transform: translateX(5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .event-date {
+            color: var(--gold-secondary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .event-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--navy-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Team Grid */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .team-member {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .member-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--gold-primary), var(--gold-secondary));
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--navy-primary);
+        }
+
+        .member-name {
+            font-weight: 600;
+            color: var(--navy-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .member-info {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: rgba(255, 255, 255, 0.98);
+                flex-direction: column;
+                padding: 1rem;
+                gap: 0.5rem;
+                display: none;
+                box-shadow: var(--shadow);
+            }
+
+            .nav-links.mobile-active {
+                display: flex;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">S</div>
+                <span class="logo-text">sarvasva</span>
+            </a>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li class="nav-link active" onclick="showPage('home')">Home</li>
+                <li class="nav-link" onclick="showPage('research')">Research</li>
+                <li class="nav-link" onclick="showPage('news')">News</li>
+                <li class="nav-link" onclick="showPage('blog')">Blog/Article</li>
+                <li class="nav-link" onclick="showPage('events')">Events</li>
+                <li class="nav-link" onclick="showPage('about')">About Us</li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Home Page -->
+        <div id="home" class="page active">
+            <h2 class="section-header">Welcome to SARVASVA</h2>
+            
+            <!-- Acknowledgement Grid -->
+            <div class="acknowledgement-grid">
+                <div class="dept-pill principal">Principal</div>
+                <div class="dept-pill">Biochemistry</div>
+                <div class="dept-pill">Bioinformatics</div>
+                <div class="dept-pill">Biotechnology</div>
+                <div class="dept-pill">Botany</div>
+                <div class="dept-pill">Chemistry</div>
+                <div class="dept-pill">Computer Science</div>
+                <div class="dept-pill">Cyber Security</div>
+                <div class="dept-pill">Economics</div>
+                <div class="dept-pill">Electronics</div>
+                <div class="dept-pill">English</div>
+                <div class="dept-pill">Fisheries</div>
+                <div class="dept-pill">Forensic Science</div>
+                <div class="dept-pill">Geography</div>
+                <div class="dept-pill">Geology</div>
+                <div class="dept-pill">Hindi</div>
+                <div class="dept-pill">Horticulture</div>
+                <div class="dept-pill">Mathematics</div>
+                <div class="dept-pill">Microbiology</div>
+                <div class="dept-pill">N.C.C.</div>
+                <div class="dept-pill">N.S.S.</div>
+                <div class="dept-pill">Pharmaceutical Chemistry</div>
+                <div class="dept-pill">Physics</div>
+                <div class="dept-pill">Seed Technology</div>
+                <div class="dept-pill">Sports</div>
+                <div class="dept-pill">Statistics</div>
+                <div class="dept-pill">Zoology</div>
+                <div class="dept-pill mentors">Mentors</div>
+            </div>
+
+            <!-- Highlight Cards -->
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-newspaper"></i>
+                        </div>
+                        <h3 class="card-title">Latest News</h3>
+                    </div>
+                    <p class="card-content">College achieves NAAC A++ accreditation. New research center inaugurated in the Department of Biotechnology.</p>
+                    <a href="#" class="card-link" target="_blank">
+                        Read More <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-microscope"></i>
+                        </div>
+                        <h3 class="card-title">Research Highlight</h3>
+                    </div>
+                    <p class="card-content">Breakthrough discovery in sustainable agriculture by our Seed Technology department receives national recognition.</p>
+                    <a href="#" class="card-link" target="_blank">
+                        Explore Research <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h3 class="card-title">Featured Event</h3>
+                    </div>
+                    <p class="card-content">Annual Tech Symposium 2024 - Join us for three days of innovation, workshops, and networking opportunities.</p>
+                    <a href="#" class="card-link" target="_blank">
+                        View Events <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Principal's Message -->
+            <div class="principal-message">
+                <h3><i class="fas fa-quote-left"></i> Principal's Message</h3>
+                <p>Welcome to SARVASVA, our college's comprehensive knowledge hub. This platform represents our commitment to academic excellence, innovation, and collaborative learning. Through this portal, we aim to showcase the remarkable achievements of our students and faculty across all 26 departments. I encourage everyone to explore, contribute, and make the most of this valuable resource as we continue our journey towards educational excellence.</p>
+                <p style="margin-top: 1rem; font-style: italic;">- Dr. Anamika Jain, Principal</p>
+            </div>
+        </div>
+
+        <!-- Research Page -->
+        <div id="research" class="page">
+            <h2 class="section-header">Research Projects</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-dna"></i>
+                        </div>
+                        <h3 class="card-title">Gene Editing in Crops</h3>
+                    </div>
+                    <p class="card-content">
+                        <span class="dept-badge">Biotechnology</span>
+                        <span class="dept-badge">Seed Technology</span>
+                    </p>
+                    <p class="card-content">Developing drought-resistant varieties using CRISPR technology for sustainable agriculture in arid regions.</p>
+                    <a href="https://drive.google.com" class="card-link" target="_blank">
+                        View Details <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3 class="card-title">AI in Healthcare Diagnostics</h3>
+                    </div>
+                    <p class="card-content">
+                        <span class="dept-badge">Computer Science</span>
+                        <span class="dept-badge">Bioinformatics</span>
+                    </p>
+                    <p class="card-content">Machine learning models for early detection of diseases through medical imaging analysis.</p>
+                    <a href="https://drive.google.com" class="card-link" target="_blank">
+                        View Details <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <h3 class="card-title">Biodiversity Conservation</h3>
+                    </div>
+                    <p class="card-content">
+                        <span class="dept-badge">Botany</span>
+                        <span class="dept-badge">Zoology</span>
+                    </p>
+                    <p class="card-content">Comprehensive study of local flora and fauna for ecosystem preservation and restoration.</p>
+                    <a href="https://drive.google.com" class="card-link" target="_blank">
+                        View Details <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3 class="card-title">Quantum Cryptography</h3>
+                    </div>
+                    <p class="card-content">
+                        <span class="dept-badge">Cyber Security</span>
+                        <span class="dept-badge">Physics</span>
+                    </p>
+                    <p class="card-content">Developing quantum-resistant encryption methods for next-generation cybersecurity applications.</p>
+                    <a href="https://drive.google.com" class="card-link" target="_blank">
+                        View Details <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- News Page -->
+        <div id="news" class="page">
+            <h2 class="section-header">College News & Placements</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <h3 class="card-title">Record Placements 2024</h3>
+                    </div>
+                    <p class="card-content">95% placement rate achieved with average package of 8.5 LPA. Top recruiters include Microsoft, Google, and Infosys.</p>
+                    <a href="https://drive.google.com" class="card-link" target="_blank">
+                        Full Report <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <h3 class="card-title">National Science Award</h3>
+                    </div>
+                    <p class="card-content">Chemistry department receives prestigious national award for innovative research in sustainable materials.</p>
+                    <a href="https://drive.google.com" class="card-link" target="_blank">
+                        Read More <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h3 class="card-title">Industry Collaboration</h3>
+                    </div>
+                    <p class="card-content">New MoU signed with leading pharmaceutical companies for research and internship opportunities.</p>
+                    <a href="https://drive.google.com" class="card-link" target="_blank">
+                        Details <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3 class="card-title">Alumni Achievement</h3>
+                    </div>
+                    <p class="card-content">Our alumnus Dr. Rajesh Kumar appointed as Director of National Research Institute.</p>
+                    <a href="https://drive.google.com" class="card-link" target="_blank">
+                        Full Story <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Blog/Article Page -->
+        <div id="blog" class="page">
+            <h2 class="section-header">Student Articles & Blogs</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-pen"></i>
+                        </div>
+                        <h3 class="card-title">The Future of AI</h3>
+                    </div>
+                    <p class="card-content">
+                        <span class="dept-badge">Computer Science</span>
+                        By Priya Sharma, Semester VI
+                    </p>
+                    <p class="card-content">An exploration of artificial intelligence trends and their impact on society in the coming decade.</p>
+                    <a href="https://drive.google.com" class="card-link" target="_blank">
+                        Read Article <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <h3 class="card-title">Green Chemistry Revolution</h3>
+                    </div>
+                    <p class="card-content">
+                        <span class="dept-badge">Chemistry</span>
+                        By Amit Patel, Semester IV
+                    </p>
+                    <p class="card-content">How sustainable chemical processes are reshaping industries and protecting our environment.</p>
+                    <a href="https://drive.google.com" class="card-link" target="_blank">
+                        Read Article <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3 class="card-title">Climate Change & Economics</h3>
+                    </div>
+                    <p class="card-content">
+                        <span class="dept-badge">Economics</span>
+                        By Sarah Johnson, Semester V
+                    </p>
+                    <p class="card-content">Analyzing the economic implications of climate change and sustainable development strategies.</p>
+                    <a href="https://drive.google.com" class="card-link" target="_blank">
+                        Read Article <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Events Page -->
+        <div id="events" class="page">
+            <h2 class="section-header">Upcoming Events</h2>
+            
+            <div class="event-block">
+                <div class="event-date"><i class="fas fa-calendar"></i> March 15-17, 2024</div>
+                <div class="event-title">National Science Symposium</div>
+                <p>
+                    <span class="dept-badge">All Science Departments</span>
+                </p>
+                <p>Three-day symposium featuring keynote speakers, research presentations, and hands-on workshops.</p>
+            </div>
+
+            <div class="event-block">
+                <div class="event-date"><i class="fas fa-calendar"></i> March 25, 2024</div>
+                <div class="event-title">Cyber Security Workshop</div>
+                <p>
+                    <span class="dept-badge">Cyber Security</span>
+                    <span class="dept-badge">Computer Science</span>
+                </p>
+                <p>Interactive workshop on ethical hacking and network security fundamentals.</p>
+            </div>
+
+            <div class="event-block">
+                <div class="event-date"><i class="fas fa-calendar"></i> April 2-3, 2024</div>
+                <div class="event-title">Literary Festival</div>
+                <p>
+                    <span class="dept-badge">English</span>
+                    <span class="dept-badge">Hindi</span>
+                </p>
+                <p>Celebrating literature with poetry readings, creative writing workshops, and author meet-and-greets.</p>
+            </div>
+
+            <div class="event-block">
+                <div class="event-date"><i class="fas fa-calendar"></i> April 10, 2024</div>
+                <div class="event-title">Sports Championship</div>
+                <p>
+                    <span class="dept-badge">Sports</span>
+                    <span class="dept-badge">N.C.C.</span>
+                    <span class="dept-badge">N.S.S.</span>
+                </p>
+                <p>Annual inter-college sports championship featuring athletics, cricket, basketball, and more.</p>
+            </div>
+
+            <div class="event-block">
+                <div class="event-date"><i class="fas fa-calendar"></i> April 20, 2024</div>
+                <div class="event-title">Biotech Innovation Summit</div>
+                <p>
+                    <span class="dept-badge">Biotechnology</span>
+                    <span class="dept-badge">Microbiology</span>
+                </p>
+                <p>Showcase of innovative biotech projects and startup pitching competition.</p>
+            </div>
+        </div>
+
+        <!-- About Us Page -->
+        <div id="about" class="page">
+            <h2 class="section-header">About SARVASVA</h2>
+            <p style="margin-bottom: 2rem; color: var(--gray);">SARVASVA is our college's comprehensive knowledge hub, designed to foster collaboration, showcase achievements, and promote academic excellence across all departments.</p>
+            
+            <h3 style="margin-bottom: 1rem; color: var(--navy-primary);">Our Team</h3>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="member-name">Prabhanshu Shrivastava</div>
+                    <div class="member-info">Computer Science, Sem IV</div>
+                    <div class="member-info">Lead Developer</div>
+                </div>
+
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="member-name">Swastik Vishwakarma</div>
+                    <div class="member-info">Cyber Security, Sem IV</div>
+                    <div class="member-info">Editor</div>
+                </div>
+
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="member-name">Aditya Suman</div>
+                    <div class="member-info">Forensic Science, Sem IV</div>
+                    <div class="member-info">Content Manager</div>
+                </div>
+
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="member-name">Garima Joshi</div>
+                    <div class="member-info">Electronics, Sem IV</div>
+                    <div class="member-info">Student Co-Ordinator</div>
+                </div>
+            </div>
+ 	 	<div class="team-member">
+                    <div class="member-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="member-name">Ananya Anil Kumar</div>
+                    <div class="member-info">Computer Science, Sem IV</div>
+                    <div class="member-info">Student Co-Ordinator</div>
+                </div>
+            </div>
+
+
+            <h3 style="margin: 2rem 0 1rem; color: var(--navy-primary);">Our Mentors</h3>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-avatar" style="background: linear-gradient(135deg, var(--navy-primary), var(--navy-secondary));">
+                        <i class="fas fa-chalkboard-teacher" style="color: white;"></i>
+                    </div>
+                    <div class="member-name">Dr. Lavina Ma'am</div>
+                    <div class="member-info">Professor, Computer Science</div>
+                    <div class="member-info">Project Coordinator</div>
+                </div>
+
+                <div class="team-member">
+                    <div class="member-avatar" style="background: linear-gradient(135deg, var(--navy-primary), var(--navy-secondary));">
+                        <i class="fas fa-chalkboard-teacher" style="color: white;"></i>
+                    </div>
+                    <div class="member-name">Prof. Chourey Sir</div>
+                    <div class="member-info">Professor, Geology</div>
+                    <div class="member-info">Technical Advisor</div>
+                </div>
+
+                <div class="team-member">
+                    <div class="member-avatar" style="background: linear-gradient(135deg, var(--navy-primary), var(--navy-secondary));">
+                        <i class="fas fa-chalkboard-teacher" style="color: white;"></i>
+                    </div>
+                    <div class="member-name">Prof. Sapna Ma'am</div>
+                    <div class="member-info">Associate Professor, Forensic Science</div>
+                    <div class="member-info">Research Mentor</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Page Navigation
+        function showPage(pageName) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Show selected page
+            const selectedPage = document.getElementById(pageName);
+            if (selectedPage) {
+                selectedPage.classList.add('active');
+            }
+
+            // Update nav links
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.innerText.toLowerCase().includes(pageName) || 
+                    (pageName === 'home' && link.innerText === 'Home') ||
+                    (pageName === 'blog' && link.innerText.includes('Blog'))) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Close mobile menu if open
+            const navLinksContainer = document.getElementById('navLinks');
+            navLinksContainer.classList.remove('mobile-active');
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('mobile-active');
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navbar = document.querySelector('.navbar');
+            const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+            const navLinks = document.getElementById('navLinks');
+
+            if (!navbar.contains(event.target) && navLinks.classList.contains('mobile-active')) {
+                navLinks.classList.remove('mobile-active');
+            }
+        });
+
+        // Add smooth scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Add loading animation for cards
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeIn 0.5s ease forwards';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.card, .event-block, .team-member');
+            cards.forEach(card => observer.observe(card));
+        });
+    </script>
+</body>
+</html>
